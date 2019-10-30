@@ -24,12 +24,12 @@ class FileAttributeFormatter extends AbstractStandardFormatter
      */
     public function getPublishStartedDescription(LoggableObject $object)
     {
-        return t('Setting attribute %s on page %s', $object->getHandle(), $object->getFile());
+        return t('Setting attribute %s on file %s', $object->getHandle(), $object->getFile());
     }
 
     public function getPublishCompleteDescription(LoggableObject $object)
     {
-        return t('Setting attribute %s on page %s', $object->getHandle(), $object->getFile());
+        return t('Setting attribute %s on file %s', $object->getHandle(), $object->getFile());
     }
 
 

@@ -9,7 +9,7 @@ class FileFormatter extends AbstractFormatter
 {
 	protected function getPackageHandle()
     {
-        return 'cfisd_upgrade_migration';
+        return 'migration_tool_files';
     }
 
     public function getPluralDisplayName()

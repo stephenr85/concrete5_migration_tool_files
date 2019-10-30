@@ -7,6 +7,7 @@
 	use \Events;
 
 	use Package;
+	use Concrete\Package\MigrationToolFiles\Routing\ToolsRouteList;
 
 	/** 
 	 * This is the main controller for the package which controls the functionality like Install/Uninstall etc. 
@@ -60,15 +61,32 @@
 
 	public function on_start(){
 
+		// Add mapping types
 		$importMapper = \Core::make('migration/manager/mapping');
         $importMapper->extend('file_attribute', function () {
         	return new \Esiteful\Concrete5\MigrationTool\Batch\ContentMapper\Type\FileAttribute();
         });
+        $importMapper->driver('file_attribute');
 
 		// Add import routines
 		$importManager = \Core::make('migration/manager/importer/cif');
 		$importManager->addRoutine(new \Esiteful\Concrete5\MigrationTool\Importer\CIF\Element\File, 'user');
 		//$importManager->addRoutine(new \Esiteful\Concrete5\MigrationTool\Importer\CIF\Element\FileSet, 'file');
+
+		// Add transformers
+		$importTransformer = \Core::make('migration/manager/import/attribute/value');
+        $importTransformer->extend('file_attribute', function () {
+        	return new \Esiteful\Concrete5\MigrationTool\Batch\ContentTransformer\Type\FileAttribute();
+        });
+        $importTransformer->driver('file_attribute');
+
+		// Add import routines
+		$importPublisher = \Core::make('migration/manager/publisher');
+		$importPublisher->extend('create_files', function() {
+			return new \Esiteful\Concrete5\MigrationTool\Publisher\Routine\CreateFilesRoutine();
+		});
+		$importPublisher->driver('create_files');
+
 
 		\Core::bind('migration/batch/file/validator', function ($app, $batch) {
             if (isset($batch[0])) {
@@ -77,6 +95,11 @@
                 return $v;
             }
         });
+
+        // Load routes
+        $router = $this->app->make('router');
+        $toolsRouteList = new ToolsRouteList();
+	    $toolsRouteList->loadRoutes($router);
 	}
 
 	/**

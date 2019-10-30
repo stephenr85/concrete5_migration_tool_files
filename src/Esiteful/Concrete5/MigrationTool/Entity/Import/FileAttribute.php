@@ -69,7 +69,7 @@ class FileAttribute implements LoggableInterface
     {
         $object = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\FileAttribute();
         $object->setHandle($this->getAttribute()->getHandle());;
-        $object->setFile($this->getFile()->getTitle());
+        $object->setFile($this->getFile()->getPrefix().':'.$this->getFile()->getFilename());
         return $object;
     }
 

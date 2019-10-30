@@ -57,7 +57,7 @@ class File implements PublishableInterface, ValidatableAttributesInterface, Logg
     protected $position;
 
     /**
-     * @ORM\OneToMany(targetEntity="\Esiteful\Concrete5\MigrationTool\Entity\Import\FileAttribute", mappedBy="page", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="\Esiteful\Concrete5\MigrationTool\Entity\Import\FileAttribute", mappedBy="file", cascade={"persist", "remove"})
      **/
     public $attributes;
 
@@ -237,11 +237,11 @@ class File implements PublishableInterface, ValidatableAttributesInterface, Logg
     public function createPublisherLogObject($publishedObject = null)
     {
         $object = new \Esiteful\Concrete5\MigrationTool\Entity\Publisher\Log\Object\File();
-        $object->setName($this->getName());
-        $object->setBatchPath($this->getBatchPath());
-        $object->setOriginalPath($this->getOriginalPath());
+        $object->setName($this->getPrefix().':'.$this->getFilename());
+        $object->setFilename($this->getFilename());
+        $object->setPrefix($this->getPrefix());
         if (is_object($publishedObject)) {
-            $object->setPublishedFileID($publishedObject->getCollectionID());
+            $object->setPublishedFileID($publishedObject->getFileID());
         }
         return $object;
     }

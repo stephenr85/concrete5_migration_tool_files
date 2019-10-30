@@ -35,6 +35,7 @@ class ValidateAttributesTask implements TaskInterface
         foreach ($subject->getAttributes() as $attribute) {
             $item = new Item($attribute->getAttribute()->getHandle());
             $targetItem = $targetItemList->getSelectedTargetItem($item);
+            //\Doctrine\Common\Util\Debug::dump([$subject->getAttributeValidatorDriver(), $attribute->getAttribute()->getHandle(), $item, $targetItem], 3, true, true);
             if (!($targetItem instanceof IgnoredTargetItem)) {
                 if ($targetItem instanceof UnmappedTargetItem) {
                     $action->getTarget()->addMessage(

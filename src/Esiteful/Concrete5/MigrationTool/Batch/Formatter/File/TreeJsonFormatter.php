@@ -15,7 +15,7 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
             $messages = $this->validator->validate($file);
             $formatter = $messages->getFormatter();
             $node = new \stdClass();
-            $node->title = $file->getName();
+            $node->title = $file->getTitle();
             $node->lazy = true;
             $node->nodetype = 'file';
             $node->extraClasses = 'migration-node-main';

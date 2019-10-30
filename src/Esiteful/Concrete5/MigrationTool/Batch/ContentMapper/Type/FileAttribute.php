@@ -19,7 +19,7 @@ class FileAttribute extends \PortlandLabs\Concrete5\MigrationTool\Batch\ContentM
 
     public function getAttributeKeyCategoryHandle()
     {
-        return 'collection';
+        return 'file';
     }
 
     public function getMappedItemPluralName()
@@ -35,44 +35,14 @@ class FileAttribute extends \PortlandLabs\Concrete5\MigrationTool\Batch\ContentM
     public function getTransformableEntityObjects(BatchInterface $batch)
     {
         $attributes = array();
-        foreach ($batch->getPages() as $page) {
-            foreach ($page->getAttributes() as $attribute) {
+        $files = $batch->getObjectCollection('file');
+        foreach ($files->getFiles() as $file) {
+            foreach ($file->getAttributes() as $attribute) {
                 if (is_object($attribute->getAttribute())) {
                     $attributes[] = $attribute->getAttribute();
                 }
             }
         }
-
         return $attributes;
     }
-
-    public function getAttributeItemHandles(BatchInterface $batch)
-    {
-        $handles = parent::getAttributeItemHandles($batch);
-
-        $pageTypes = $batch->getObjectCollection('page_type');
-        if (is_object($pageTypes)) {
-            foreach ($pageTypes->getTypes() as $type) {
-                foreach ($type->getLayoutSets() as $set) {
-                    foreach ($set->getControls() as $control) {
-                        if ($control instanceof CollectionAttributeComposerFormLayoutSetControl) {
-                            if (!in_array($control->getItemIdentifier(), $handles)) {
-                                $handles[] = $control->getItemIdentifier();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        return $handles;
-    }
-
-    public function getCorePropertyTargetItems(BatchInterface $batch)
-    {
-        $items = array(new ShortDescriptionTargetItem($this));
-
-        return $items;
-    }
-
 }
