@@ -33,13 +33,10 @@ class File implements ElementParserInterface
     public function getObjectCollection(\SimpleXMLElement $element, Batch $batch)
     {
         $this->simplexml = $element;
-        $i = 0;
         $collection = new FileObjectCollection();
         if ($this->hasFileNodes()) {
             foreach ($this->getFileNodes() as $node) {
                 $file = $this->parseFile($node);
-                $file->setPosition($i);
-                ++$i;
                 $collection->getFiles()->add($file);
                 $file->setCollection($collection);
             }
@@ -53,8 +50,8 @@ class File implements ElementParserInterface
         $file = new \Esiteful\Concrete5\MigrationTool\Entity\Import\File();
         $file->setTitle((string) html_entity_decode($node['title']));
         $file->setDateAdded((string) $node['date-added']);
-        $file->setPrefix($node['prefix']);
-        $file->setFilename($node['name']);
+        $file->setPrefix((string)$node['prefix']);
+        $file->setFilename((string)$node['name']);
         $file->setAuthor((string) $node['author']);
         $file->setDescription((string) html_entity_decode($node['description']));
 

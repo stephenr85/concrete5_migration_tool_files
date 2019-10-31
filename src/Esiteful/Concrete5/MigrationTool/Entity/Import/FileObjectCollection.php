@@ -17,7 +17,7 @@ class FileObjectCollection extends ObjectCollection implements UserProviderInter
 {
     /**
      * @ORM\OneToMany(targetEntity="\Esiteful\Concrete5\MigrationTool\Entity\Import\File", mappedBy="collection", cascade={"persist", "remove"})
-     * @ORM\OrderBy({"position" = "ASC"})
+     * @ORM\OrderBy({"date_added" = "ASC"})
      **/
     public $files;
 

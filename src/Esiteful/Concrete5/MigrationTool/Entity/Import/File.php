@@ -52,11 +52,6 @@ class File implements PublishableInterface, ValidatableAttributesInterface, Logg
     protected $description;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    protected $position;
-
-    /**
      * @ORM\OneToMany(targetEntity="\Esiteful\Concrete5\MigrationTool\Entity\Import\FileAttribute", mappedBy="file", cascade={"persist", "remove"})
      **/
     public $attributes;
@@ -190,22 +185,6 @@ class File implements PublishableInterface, ValidatableAttributesInterface, Logg
     public function setDescription($description)
     {
         $this->description = $description;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
-    /**
-     * @param mixed $position
-     */
-    public function setPosition($position)
-    {
-        $this->position = $position;
     }
 
     /**

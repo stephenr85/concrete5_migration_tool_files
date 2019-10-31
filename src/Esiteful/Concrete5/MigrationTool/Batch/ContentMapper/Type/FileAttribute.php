@@ -34,12 +34,14 @@ class FileAttribute extends \PortlandLabs\Concrete5\MigrationTool\Batch\ContentM
 
     public function getTransformableEntityObjects(BatchInterface $batch)
     {
-        $attributes = array();
-        $files = $batch->getObjectCollection('file');
-        foreach ($files->getFiles() as $file) {
-            foreach ($file->getAttributes() as $attribute) {
-                if (is_object($attribute->getAttribute())) {
-                    $attributes[] = $attribute->getAttribute();
+        $attributes = [];
+        $collection = $batch->getObjectCollection('file');
+        if(is_object($collection)) {
+            foreach ($collection->getFiles() as $file) {
+                foreach ($file->getAttributes() as $attribute) {
+                    if (is_object($attribute->getAttribute())) {
+                        $attributes[] = $attribute->getAttribute();
+                    }
                 }
             }
         }

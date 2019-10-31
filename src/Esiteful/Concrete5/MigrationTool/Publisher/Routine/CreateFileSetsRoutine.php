@@ -7,19 +7,19 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggerInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class CreateFilesRoutine implements RoutineInterface
+class CreateFileSetsRoutine implements RoutineInterface
 {
     public function getPublisherRoutineActions(BatchInterface $batch)
     {
-        $collection = $batch->getObjectCollection('file');
+        $collection = $batch->getObjectCollection('file_set');
 
         if (!$collection) {
             return [];
         }
 
         $actions = [];
-        foreach ($collection->getFiles() as $file) {
-            $action = new CreateFileRoutineAction($file);
+        foreach ($collection->getFileSets() as $fileSet) {
+            $action = new CreateFileSetRoutineAction($fileSet);
             $actions[] = $action;
         }
 
